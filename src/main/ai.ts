@@ -1,0 +1,64 @@
+import fetch from 'node-fetch';
+
+/**
+ * Process an image with AI using OpenRouter API
+ * @param base64Image - Base64 encoded image data (without the data URI prefix)
+ * @param apiKey - OpenRouter API key
+ * @returns Promise<string> - The AI response text
+ */
+export async function processImageWithAI(base64Image: string, apiKey: string): Promise<string> {
+  try {
+    // Prepare the request to OpenRouter API
+    const url = 'https://openrouter.ai/api/v1/chat/completions';
+    
+    // Add the data URI prefix to the base64 image
+    const imageDataUri = `data:image/png;base64,${base64Image}`;
+    
+    // Create the request body according to the OpenRouter API specifications
+    const requestBody = {
+      model: 'google/gemini-2.0-flash-thinking-exp:free',
+      messages: [
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: 'Describe what you see in this screenshot. Be concise but informative.' },
+            { type: 'image_url', image_url: { url: imageDataUri } }
+          ]
+        }
+      ],
+      max_tokens: 1024
+    };
+
+    // Make the API request
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+        'HTTP-Referer': 'https://screenshot-ai-app.local', // Required by OpenRouter
+        'X-Title': 'Screenshot AI App' // Optional - helps with analytics in OpenRouter
+      },
+      body: JSON.stringify(requestBody)
+    });
+
+    // Check if the request was successful
+    if (!response.ok) {
+      const errorData = await response.text();
+      throw new Error(`API request failed: ${response.status} ${response.statusText} - ${errorData}`);
+    }
+
+    // Parse the response
+    const data = await response.json() as any;
+    
+    // Extract the AI response text
+    if (data && data.choices && data.choices.length > 0 && data.choices[0].message) {
+      const content = data.choices[0].message.content;
+      return typeof content === 'string' ? content : JSON.stringify(content);
+    } else {
+      throw new Error('Invalid response format from OpenRouter API');
+    }
+  } catch (error) {
+    console.error('Error processing image with AI:', error);
+    throw new Error(`Failed to process image with AI: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
+}

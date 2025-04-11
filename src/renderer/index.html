@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>Screenshot AI</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div id="notification-container" class="hidden">
+    <div class="notification-header">
+      <h3>AI Analysis</h3>
+      <button id="close-button">×</button>
+    </div>
+    <div class="notification-content">
+      <div id="response-text">Processing...</div>
+    </div>
+    <div class="notification-footer">
+      <small>Screenshot AI - Ctrl+Shift+P to capture</small>
+    </div>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
