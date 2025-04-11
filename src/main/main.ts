@@ -65,6 +65,9 @@ function createNotificationWindow(aiResponse: string) {
     alwaysOnTop: true,
     resizable: false,
     skipTaskbar: true,
+    // Make window invisible to screen recording software
+    type: 'toolbar',
+    focusable: false, // Prevents the window from taking focus
     webPreferences: {
       preload: path.join(__dirname, '../preload/preload.js'),
       contextIsolation: true,

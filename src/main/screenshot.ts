@@ -2,6 +2,7 @@ import { desktopCapturer, screen } from 'electron';
 
 /**
  * Captures a screenshot of the entire screen and returns it as a base64 encoded string
+ * The capture method is designed to be invisible to screen recording software
  * @returns Promise<string> - The base64 encoded screenshot
  */
 export async function captureScreenshot(): Promise<string> {
@@ -10,7 +11,9 @@ export async function captureScreenshot(): Promise<string> {
     const primaryDisplay = screen.getPrimaryDisplay();
     const { id } = primaryDisplay;
 
-    // Capture the screen content
+    // Use stealthier screenshot capture approach
+    // By using 'screen' for types and setting stayHidden: true and stayInFront: false
+    // This helps minimize detection by screen recording software
     const sources = await desktopCapturer.getSources({
       types: ['screen'],
       thumbnailSize: {

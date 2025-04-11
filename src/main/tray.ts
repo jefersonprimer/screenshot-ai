@@ -1,5 +1,4 @@
 import { App, BrowserWindow, Menu, Tray, nativeImage, dialog } from 'electron';
-import path from 'path';
 
 let tray: Tray | null = null;
 
@@ -15,7 +14,7 @@ const createTrayIcon = (): string => {
   return `data:image/svg+xml;base64,${Buffer.from(svgIcon).toString('base64')}`;
 };
 
-export function setupTray(app: App, mainWindow: BrowserWindow | null): Tray {
+export function setupTray(app: App, _mainWindow: BrowserWindow | null): Tray {
   // Create the tray icon
   const icon = nativeImage.createFromDataURL(createTrayIcon());
   tray = new Tray(icon);
