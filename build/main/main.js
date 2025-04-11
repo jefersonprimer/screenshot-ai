@@ -11,8 +11,8 @@ const ai_1 = require("./ai");
 // Keep a global reference of the window object to prevent garbage collection
 let mainWindow = null;
 let notificationWindow = null;
-// API Key from OpenRouter
-const OPENROUTER_API_KEY = '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';
+// API Key from OpenRouter (load from environment variable or use default for testing)
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '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';
 // Register IPC handlers
 function registerIpcHandlers() {
     electron_1.ipcMain.handle('open-external-link', (_, url) => {

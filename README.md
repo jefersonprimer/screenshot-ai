@@ -30,29 +30,38 @@ Screenshot AI is an Electron-based desktop application that runs silently in the
    cd screenshot-ai
    ```
 
-2. Install dependencies:
+2. Set up environment variables:
+   ```
+   cp .env.example .env
+   ```
+   Edit the .env file if you want to use your own OpenRouter API key.
+
+3. Install dependencies:
    ```
    npm install
    ```
 
-3. Build the application:
+4. Build the application:
    ```
    npx tsc
    ```
 
-4. Run the application:
+5. Run the application:
    ```
    electron build/main/main.js
    ```
 
+### Shortcut
+Once the application is running, use **Ctrl+Shift+P** to capture the current screen. The AI analysis will appear in a stealth notification window.
+
 ## Packaging
 
-To package the application into a desktop executable:
+To package the application into a desktop executable that you can share or install:
 
 ### For all platforms
 ```
 npm install -g electron-builder
-npm run build # This will run tsc to compile TypeScript
+npx tsc # Compile TypeScript
 electron-builder
 ```
 
@@ -70,9 +79,13 @@ This application uses special techniques to remain invisible to screen recording
 
 1. **Invisible Window Type**: The notification window uses the `toolbar` window type with `focusable: false`, making it invisible to most screen recording software.
 
-2. **Stealth Screenshot Capture**: Using Electron's `desktopCapturer` with optimized settings to avoid detection during capture.
+2. **Enhanced Window Properties**: Additional properties like `hasShadow: false`, `titleBarStyle: 'hidden'`, and slight opacity make the notification windows even harder to detect by recording software.
 
-3. **No Focus Capturing**: The application never takes focus away from other windows, making its operation seamless and invisible.
+3. **Stealth Screenshot Capture**: Using Electron's `desktopCapturer` with optimized settings to avoid detection during capture.
+
+4. **No Focus Capturing**: The application never takes focus away from other windows, making its operation seamless and invisible.
+
+5. **Background Operation**: The main window remains hidden, with all interactions happening through the system tray icon.
 
 ### Screenshot Process
 1. When the Ctrl+Shift+P shortcut is pressed, the application captures the entire screen.

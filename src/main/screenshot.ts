@@ -12,14 +12,17 @@ export async function captureScreenshot(): Promise<string> {
     const { id } = primaryDisplay;
 
     // Use stealthier screenshot capture approach
-    // By using 'screen' for types and setting stayHidden: true and stayInFront: false
+    // By using 'screen' for types and setting specific options
     // This helps minimize detection by screen recording software
     const sources = await desktopCapturer.getSources({
       types: ['screen'],
       thumbnailSize: {
         width: primaryDisplay.size.width,
         height: primaryDisplay.size.height,
-      },
+      }
+      // Note: Using stayHidden and stayInFront options would be ideal for stealth
+      // but they're not part of the standard API. In a real implementation,
+      // custom native modules could be used to enhance stealth.
     });
 
     // Find the primary display source
