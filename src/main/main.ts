@@ -8,8 +8,8 @@ import { processImageWithAI } from './ai';
 let mainWindow: BrowserWindow | null = null;
 let notificationWindow: BrowserWindow | null = null;
 
-// API Key from OpenRouter
-const OPENROUTER_API_KEY = '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';
+// API Key from OpenRouter (load from environment variable or use default for testing)
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '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';
 
 // Register IPC handlers
 function registerIpcHandlers() {

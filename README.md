@@ -99,6 +99,18 @@ The application makes requests to OpenRouter with the following format:
 }
 ```
 
+### Environment Setup
+To use the OpenRouter API for image analysis, you need to set up an API key:
+
+1. Create an account at [OpenRouter](https://openrouter.ai)
+2. Generate an API key under your account settings
+3. Create a `.env` file in the root directory with:
+   ```
+   OPENROUTER_API_KEY=your_api_key_here
+   ```
+
+Or you can use the sample API key in .env.example by renaming it to .env (for testing purposes only).
+
 ## Disclaimer
 
 **IMPORTANT**: This application is for private use and educational purposes only.
